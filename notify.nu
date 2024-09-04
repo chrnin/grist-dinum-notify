@@ -1,7 +1,7 @@
 #!/usr/bin/env nu
 use grist.nu
 
-if  not (["MAIL_SENDER", "MAIL_USER", "MAIL_PASSWORD", "MAIL_TABLE", "MAIL_BATCHSIZE"]|all {|c| $c in ($env|columns)}) {
+if  not (["MAIL_SENDER", "MAIL_USER", "MAIL_PASSWORD"]|all {|c| $c in ($env|columns)}) {
     print "error: env is not set (see .env.example)"
     exit 1
 }

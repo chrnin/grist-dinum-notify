@@ -1,0 +1,28 @@
+name: send notifications
+
+on: workflow_dispatch
+schedule:
+  - cron: "0 5 * * *"   # every 5 minutes
+
+
+jobs:
+  send-notifications:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hustcer/setup-nu@v3.9
+        with:
+          version: "0.87"
+
+      - name: send notifications
+        run: nu notify.nu 
+        env:
+          GRIST_APIKEY: ${{ secrets.GRIST_APIKEY }}
+          GRIST_DOC: ${{ secrets.GRIST_DOC }}
+          GRIST_DOMAIN: ${{ secrets.GRIST_DOMAIN }}
+          GRIST_ORG: ${{ secrets.GRIST_ORG }}
+          GRIST_WORKSPACE: ${{ secrets.GRIST_WORKSPACE }}
+          MAIL_SENDER: ${{ secrets.MAIL_SENDER }}
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+
