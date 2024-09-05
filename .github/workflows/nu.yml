@@ -1,8 +1,9 @@
 name: send notifications
 
-on: workflow_dispatch
-schedule:
-  - cron: "0 5 * * *"   # every 5 minutes
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"   # every 5 minutes
 
 
 jobs:
