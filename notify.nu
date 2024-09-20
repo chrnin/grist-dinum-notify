@@ -19,18 +19,16 @@ let messages = $commentaires |
 let mails = $messages | transpose | rename destinataire commentaires
 
 for mail in $mails {
-  if $mail.destinataire in ['alice.pannetrat@beta.gouv.fr', 'christophe.ninucci@mail.numerique.gouv.fr'] { 
-    let message = $mail.commentaires | get Proprietes_mail.message | str join "\n" 
-    let body = $"Bonjour,\n\nvoici les commentaires Grist écrits à votre intention lors de la journée d'hier:\n\n($message)\n\nBonne journée :)"
-    (curl --ssl-reqd --url "smtps://smtp.numerique.gouv.fr"
-       --user $"($env.MAIL_USER):($env.MAIL_PASSWORD)"
-       --mail-from $env.MAIL_USER
-       --mail-rcpt $mail.destinataire 
-       --header "Subject: Commentaires GRIST" 
-       --header $"From: ($env.MAIL_USER)" 
-       --header $"To: ($mail.destinataire)" 
-       --form '=(;type=multipart/mixed' 
-       --form $"=($body);type=text/plain" 
-       --form '=)')
-  }
+  let message = $mail.commentaires | get Proprietes_mail.message | str join "\n" 
+  let body = $"Bonjour,\n\nvoici les commentaires Grist écrits à votre intention lors de la journée d'hier:\n\n($message)\n\nVous pouvez retrouver vos notifications ici: https://grist.numerique.gouv.fr/o/dinum/kkc4FSuGkK1n/Gestion-financiere-et-RH/p/107\n\nBonne journée :)"
+  (curl --ssl-reqd --url "smtps://smtp.numerique.gouv.fr"
+    --user $"($env.MAIL_USER):($env.MAIL_PASSWORD)"
+    --mail-from $env.MAIL_USER
+    --mail-rcpt $mail.destinataire 
+    --header "Subject: Commentaires GRIST" 
+    --header $"From: ($env.MAIL_USER)" 
+    --header $"To: ($mail.destinataire)" 
+    --form '=(;type=multipart/mixed' 
+    --form $"=($body);type=text/plain" 
+    --form '=)')
 }
