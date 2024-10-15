@@ -30,7 +30,7 @@ for mail in $mails {
     --header "Subject: Commentaires GRIST" 
     --header $"From: ($env.MAIL_USER)" 
     # --header $"To: ($mail.destinataire)" 
-    --header $"To: (christophe.ninucci@mail.numerique.gouv.fr)" 
+    --header $"To: christophe.ninucci@mail.numerique.gouv.fr" 
     --form '=(;type=multipart/mixed' 
     --form $"=($body);type=text/plain" 
     --form '=)')
