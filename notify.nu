@@ -21,13 +21,16 @@ let mails = $messages | transpose | rename destinataire commentaires
 for mail in $mails {
   let message = $mail.commentaires | get Proprietes_mail.message | str join "\n" 
   let body = $"Bonjour,\n\nvoici les commentaires Grist écrits à votre intention lors de la journée d'hier:\n\n($message)\n\nVous pouvez retrouver vos notifications ici: https://grist.numerique.gouv.fr/o/dinum/kkc4FSuGkK1n/Gestion-financiere-et-RH/p/107\n\nBonne journée :)"
+  print $body
   (curl --ssl-reqd --url "smtps://smtp.numerique.gouv.fr"
     --user $"($env.MAIL_USER):($env.MAIL_PASSWORD)"
     --mail-from $env.MAIL_USER
-    --mail-rcpt $mail.destinataire 
+    --mail-rcpt christophe.ninucci@mail.numerique.gouv.fr
+    # --mail-rcpt $mail.destinataire 
     --header "Subject: Commentaires GRIST" 
     --header $"From: ($env.MAIL_USER)" 
-    --header $"To: ($mail.destinataire)" 
+    # --header $"To: ($mail.destinataire)" 
+    --header $"To: (christophe.ninucci@mail.numerique.gouv.fr)" 
     --form '=(;type=multipart/mixed' 
     --form $"=($body);type=text/plain" 
     --form '=)')
