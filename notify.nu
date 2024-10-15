@@ -25,11 +25,10 @@ for mail in $mails {
   (curl --ssl-reqd --url "smtps://smtp.numerique.gouv.fr"
     --user $"($env.MAIL_USER):($env.MAIL_PASSWORD)"
     --mail-from $env.MAIL_USER
-    --mail-rcpt christophe.ninucci@mail.numerique.gouv.fr
-    # --mail-rcpt $mail.destinataire 
+    --mail-rcpt $mail.destinataire 
     --header "Subject: Commentaires GRIST" 
     --header $"From: ($env.MAIL_USER)" 
-    # --header $"To: ($mail.destinataire)" 
+    --header $"To: ($mail.destinataire)" 
     --header $"To: christophe.ninucci@mail.numerique.gouv.fr" 
     --form '=(;type=multipart/mixed' 
     --form $"=($body);type=text/plain" 
