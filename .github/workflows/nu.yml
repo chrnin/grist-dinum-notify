@@ -1,9 +1,10 @@
 name: send notifications
 
-on: 
-  workflow_dispatch:
-  schedule:
-    - cron: "0 5 * * *"   # every 5 minutes
+### disabled, now running on gitlab.mim-libre.fr
+# on: 
+#   workflow_dispatch:
+#    schedule:
+#     - cron: "0 5 * * *"   # every 5 minutes
 
 
 jobs:
